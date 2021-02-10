@@ -9,7 +9,7 @@ export const register = (account, password, inviteCode) => {
 };
 
 export const login = (account, password) => {
-  return post('http://localhost:3000/auth/login', {
+  return axios.post('http://localhost:3000/auth/login', {
     account,
     password,
   });

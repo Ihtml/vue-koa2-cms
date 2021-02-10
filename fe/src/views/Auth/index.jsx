@@ -1,6 +1,6 @@
 import { defineComponent, reactive} from 'vue';
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons-vue';
-import { auth } from '../../api';
+import { auth } from '@/api';
 import { message, Modal, Input } from 'ant-design-vue';
 
 export default defineComponent({
@@ -24,6 +24,7 @@ export default defineComponent({
 
     const login = () => {
       console.log('login');
+      auth.login(loginForm.account, loginForm.password)
     }
 
     const register = () => {
