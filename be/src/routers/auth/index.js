@@ -4,6 +4,7 @@ const { getBody } = require('../../helpers/utils');
 const jwt = require('jsonwebtoken');
 const config = require('../../project.config');
 const User = mongoose.model('User') // 注册User的Schema
+const InviteCode = mongoose.model('InviteCode');
 
 const router = new Router({
     prefix: '/auth',
@@ -16,6 +17,34 @@ router.post('/register', async (ctx) => {
         password,
         inviteCode
     } = getBody(ctx)
+
+
+    // 做表单校验
+    if (account === '' || password === '' || inviteCode === '') {
+        ctx.body = {
+            code: 0,
+            msg: '字段不能为空',
+            data: null,
+        };
+
+        return;
+    }
+
+    // 找有没有邀请码
+    const findCode = await InviteCode.findOne({
+        code: inviteCode,
+    }).exec();
+
+    // 如果没找到邀请码
+    if ((!findCode) || findCode.user) {
+        ctx.body = {
+            code: 0,
+            msg: '邀请码不正确',
+            data: null,
+        };
+
+        return;
+    }
 
     // 去找 account 为 传递上来的 “account” 的用户
     const findUser = await User.findOne({
@@ -42,6 +71,11 @@ router.post('/register', async (ctx) => {
     // 把创建的用户同步到 mongodb
     const res = await user.save();
 
+    findCode.user = res._id;
+    findCode.meta.updatedAt = new Date().getTime();
+  
+    await findCode.save();
+    
     // 响应成功
     ctx.body = {
         code: 1,
