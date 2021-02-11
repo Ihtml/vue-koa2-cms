@@ -6,7 +6,12 @@ const routes = [
     name: 'Auth',
     component:() => import(/* webpackChunkName: "auth" */ '../views/Auth/index.vue'),
   },
-
+  {
+    path: '/',
+    name: 'BasicLayout',
+    // redirect: '/auth',
+    component: () => import(/* webpackChunkName: "BasicLayout" */ '../layout/BasicLayout/index.vue')
+  }
 ];
 
 const router = createRouter({
