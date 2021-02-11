@@ -10,7 +10,14 @@ const routes = [
     path: '/',
     name: 'BasicLayout',
     // redirect: '/auth',
-    component: () => import(/* webpackChunkName: "BasicLayout" */ '../layout/BasicLayout/index.vue')
+    component: () => import(/* webpackChunkName: "BasicLayout" */ '../layout/BasicLayout/index.vue'),
+    children: [
+      {
+        path: 'goods',
+        name: 'Goods',
+        component: () => import(/* webpackChunkName: "Goods" */ '../views/Goods/index.vue'),
+      },
+    ]
   }
 ];
 
