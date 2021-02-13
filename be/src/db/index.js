@@ -3,6 +3,7 @@ require('./Schemas/User')
 require('./Schemas/InviteCode');
 require('./Schemas/Good');
 require('./Schemas/InventoryLog');
+require('./Schemas/Character');
 const mongoose = require('mongoose')
 
 // 给哪个数据库

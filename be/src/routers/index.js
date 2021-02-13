@@ -3,6 +3,7 @@ const inviteCode = require('./invite-code');
 const good = require('./good');
 const inventoryLog = require('./inventory-log');
 const user = require('./user');
+const character = require('./character');
 
 module.exports = (app) => {
     app.use(auth.routes())
@@ -10,4 +11,5 @@ module.exports = (app) => {
     app.use(good.routes());
     app.use(inventoryLog.routes());
     app.use(user.routes());
+    app.use(character.routes());
 }
