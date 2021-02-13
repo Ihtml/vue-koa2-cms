@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-     <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -11,4 +11,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  background: #fafafa !important;
+}
 </style>
