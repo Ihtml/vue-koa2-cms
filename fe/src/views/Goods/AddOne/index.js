@@ -28,6 +28,9 @@ export default defineComponent({
         .success((d, { data }) => {
           Object.assign(addForm, defaultFormData);
           message.success(data.msg);
+          context.emit('getList');
+
+          close();
         });
     };
 

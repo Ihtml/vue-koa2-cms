@@ -1,5 +1,6 @@
 import { defineComponent, ref, onMounted } from 'vue';
 import { book } from '@/api';
+import { useRouter } from 'vue-router';
 import { message, Modal, Input } from 'ant-design-vue';
 import { result, formatTimestamp } from '@/helpers/utils';
 import AddOne from './AddOne/index.vue';
@@ -11,6 +12,8 @@ export default defineComponent({
     Update,
   },
   setup() {
+    const router = useRouter();
+
     const columns = [
       {
         title: '书名',
@@ -180,6 +183,11 @@ export default defineComponent({
       Object.assign(curEditBook.value, newData);
     };
 
+    // 进入商品详情页
+    const toDetail = ({ record }) => {
+      router.push(`/goods/${record._id}`);
+    };
+
     return {
       columns,
       show,
@@ -194,6 +202,7 @@ export default defineComponent({
       isSearch,
       remove,
       updateCount,
+      toDetail,
       showUpdateModal,
       update,
       curEditBook,
