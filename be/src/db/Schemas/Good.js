@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { getMeta } = require('../helpers');
+const { getMeta, preSave } = require('../helpers');
 
 const GoodSchema = new mongoose.Schema({
   // 书名
@@ -18,5 +18,5 @@ const GoodSchema = new mongoose.Schema({
   meta: getMeta(),
 });
 
-
+GoodSchema.pre('save', preSave);
 mongoose.model('Good', GoodSchema);

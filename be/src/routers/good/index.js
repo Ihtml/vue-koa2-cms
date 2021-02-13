@@ -8,6 +8,15 @@ const GOOD_CONST = {
 };
 
 const Good = mongoose.model('Good');
+const InventoryLog = mongoose.model('InventoryLog');
+
+const findGoodOne = async (id) => {
+  const one = await Good.findOne({
+    _id: id,
+  }).exec();
+
+  return one;
+};
 
 const router = new Router({
   prefix: '/good',
@@ -66,6 +75,9 @@ router.get('/list', async (ctx) => {
 
   const list = await Good
     .find(query)
+    .sort({
+      _id: -1,
+    })
     .skip((page - 1) * size)
     .limit(size)
     .exec();
@@ -108,6 +120,7 @@ router.delete('/:id', async (ctx) => {
   };
 });
 
+// 出入库
 router.post('/update/count', async (ctx) => {
   const {
     id,
@@ -127,13 +140,13 @@ router.post('/update/count', async (ctx) => {
   if (!good) {
     ctx.body = {
       code: 0,
-      msg: '没有找到书籍',
+      msg: '没有找到',
     };
 
     return;
   }
 
-  // 找到了书
+  // 找到了
   if (type === GOOD_CONST.IN) {
     // 入库操作
     num = Math.abs(num);
@@ -153,6 +166,15 @@ router.post('/update/count', async (ctx) => {
   }
 
   const res = await good.save();
+
+  const log = new InventoryLog({
+    goodId: id,
+    num: Math.abs(num),
+    type,
+  });
+
+  log.save();
+
 
   ctx.body = {
     data: res,
@@ -174,7 +196,7 @@ router.post('/update', async (ctx) => {
   // 没有找到书
   if (!one) {
     ctx.body = {
-      msg: '没有找到书籍',
+      msg: '没有找到',
       code: 0,
     }
     return;
@@ -196,6 +218,30 @@ router.post('/update', async (ctx) => {
     data: res,
     code: 1,
     msg: '保存成功',
+  };
+});
+
+router.get('/detail/:id', async (ctx) => {
+  const {
+    id,
+  } = ctx.params;
+
+  const one = await findGoodOne(id);
+
+  // 没有找到书
+  if (!one) {
+    ctx.body = {
+      msg: `没有找到`,
+      code: 0,
+    };
+
+    return;
+  }
+
+  ctx.body = {
+    msg: '查询成功',
+    data: one,
+    code: 1,
   };
 });
 

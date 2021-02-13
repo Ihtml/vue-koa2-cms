@@ -12,7 +12,7 @@ const getMeta = () => {
 };
 
 const preSave = function (next) {
-    if (this.isNew) {
+    if (this.isNew) { // 如果是创建新文档
         const ts = Date.now();
 
         this['meta'].createdAt = ts;
