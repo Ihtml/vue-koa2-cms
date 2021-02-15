@@ -4,6 +4,7 @@ const { connect } = require('./db');
 const cors = require('@koa/cors') // 解决跨域 
 
 const registerRoutes = require('./routers')
+const { middleware: koaJwtMiddleware, checkUser, catchTokenError } = require('./helpers/token');
 
 const app = new Koa()
 
@@ -11,6 +12,11 @@ const app = new Koa()
 connect().then(() => {
     app.use(cors())
     app.use(koaBody())
+
+    app.use(catchTokenError);
+    koaJwtMiddleware(app);
+    app.use(checkUser);
+
     registerRoutes(app)
 
     app.listen(3000, () => {

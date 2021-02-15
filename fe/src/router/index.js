@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
+import { user } from '@/api';
 import store from '@/store';
+import { message } from 'ant-design-vue';
 
 const routes = [
   {
@@ -38,6 +40,30 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  let res = {};
+
+  try {
+    res = await user.info();
+  } catch (e) {
+    if (e.message.includes('code 401')) {
+      res.code = 401;
+    }
+  }
+
+  const { code } = res;
+
+  if (code === 401) {
+    if (to.path === '/auth') {
+      next();
+      return;
+    }
+
+    message.error('认证失败，请重新登入');
+    next('/auth');
+
+    return;
+  }
+
   const reqArr = [];
 
   if (!store.state.characterInfo.length) {

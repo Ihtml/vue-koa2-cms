@@ -27,7 +27,7 @@ const verify = (token) => {
 const middleware = (app) => {
   app.use(koaJwt({
     secret: config.JWT_SECRET,
-  }).unless({
+  }).unless({  // 哪些路径不需要做校验
     path: [
       /^\/auth\/login/,
       /^\/auth\/register/,
