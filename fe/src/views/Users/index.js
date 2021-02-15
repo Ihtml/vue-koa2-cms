@@ -1,8 +1,11 @@
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, reactive } from 'vue';
 import { user } from '@/api';
 import { message } from 'ant-design-vue';
+import { EditOutlined } from '@ant-design/icons-vue';
 import { result, formatTimestamp } from '@/helpers/utils';
 import AddOne from './AddOne/index.vue';
+import { getCharacterInfoById } from '@/helpers/character';
+import store from '@/store';
 
 const columns = [
   {
@@ -14,6 +17,12 @@ const columns = [
     title: '创建日期',
     slots: {
       customRender: 'createdAt',
+    },
+  },
+  {
+    title: '角色',
+    slots: {
+      customRender: 'character',
     },
   },
   {
@@ -33,6 +42,7 @@ const columns = [
 export default defineComponent({
   components: {
     AddOne,
+    EditOutlined,
   },
   setup() {
     const list = ref([]);
@@ -41,6 +51,12 @@ export default defineComponent({
     const showAddModal = ref(false);
     const keyword = ref('');
     const isSearch = ref(false);
+    const showEditCharacterModal = ref(false);
+
+    const editForm = reactive({
+      character: '',
+      current: {},
+    });
 
     const getUser = async () => {
       const res = await user.list(curPage.value, 10, keyword.value);
@@ -55,6 +71,24 @@ export default defineComponent({
     onMounted(() => {
       getUser();
     });
+
+    const onEdit = (record) => {
+      editForm.current = record;
+      editForm.character = record.character;
+
+      showEditCharacterModal.value = true;
+    };
+
+    const updateCharacter = async () => {
+      const res = await user.editCharacter(editForm.character, editForm.current._id);
+
+      result(res)
+        .success(({ msg }) => {
+          message.success(msg);
+          showEditCharacterModal.value = false;
+          editForm.current.character = editForm.character;
+        });
+    };
 
     const remove = async ({ _id }) => {
       const res = await user.remove(_id);
@@ -107,6 +141,12 @@ export default defineComponent({
       keyword,
       backAll,
       onSearch,
+      onEdit,
+      updateCharacter,
+      getCharacterInfoById,
+      showEditCharacterModal,
+      editForm,
+      characterInfo: store.state.characterInfo,
     };
   },
 });

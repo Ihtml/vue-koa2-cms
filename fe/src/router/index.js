@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
+import store from '@/store';
 
 const routes = [
   {
@@ -34,6 +35,22 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  const reqArr = [];
+
+  if (!store.state.characterInfo.length) {
+    reqArr.push(store.dispatch('getCharacterInfo'));
+  }
+
+  if (!store.state.userInfo.account) {
+    reqArr.push(store.dispatch('getUserInfo'));
+  }
+
+  // await Promise.all(reqArr);
+
+  next();
 });
 
 export default router;

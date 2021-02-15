@@ -28,10 +28,15 @@
           :pagination="false"
           :columns="columns"
           :data-source="list"
-          :rowKey='record=>record._id'
+          :rowKey="(record) => record._id"
         >
-          <template #createdAt="{ record }" >
+          <template #createdAt="{ record }">
             {{ formatTimestamp(record.meta.createdAt) }}
+          </template>
+
+          <template #character="{ record }">
+            <a href="javascript:;" @click="onEdit(record)"><EditOutlined /></a>
+            {{ getCharacterInfoById(record.character).title }}
           </template>
 
           <template #actions="{ record }">
@@ -42,7 +47,7 @@
         </a-table>
       </div>
 
-      <flex-end style="margin-top: 24px;" v-if="!isSearch">
+      <flex-end style="margin-top: 24px" v-if="!isSearch">
         <a-pagination
           v-model:current="curPage"
           :total="total"
@@ -52,16 +57,29 @@
       </flex-end>
     </a-card>
 
-    <add-one
-      v-model:show="showAddModal"
-      @getList="getUser"
-    />
+    <add-one v-model:show="showAddModal" @getList="getUser" />
+
+    <a-modal
+      v-model:visible="showEditCharacterModal"
+      title="修改角色"
+      @ok="updateCharacter"
+    >
+      <a-select v-model:value="editForm.character" style="width: 220px">
+        <a-select-option
+          v-for="item in characterInfo"
+          :key="item._id"
+          :value="item._id"
+        >
+          {{ item.title }}
+        </a-select-option>
+      </a-select>
+    </a-modal>
   </div>
 </template>
 
 <script src="./index.js"></script>
 
 <style lang="scss" scoped>
-  @import './index.scss';
+@import "./index.scss";
 </style>
 
