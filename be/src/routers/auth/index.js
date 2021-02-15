@@ -116,6 +116,7 @@ router.post('/login', async (ctx) => {
 
     const user = {
         account: one.account,
+        character: one.character,
         _id: one._id,
     };
 

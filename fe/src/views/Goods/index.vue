@@ -26,6 +26,7 @@
         :columns="columns"
         :data-source="list"
         :pagination="false"
+        :rowKey="(record) => record._id"
       >
         <template #publishDate="data">
           {{ formatTimestamp(data.record.publishDate) }}

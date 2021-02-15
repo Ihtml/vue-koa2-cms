@@ -48,7 +48,7 @@ router.beforeEach(async (to, from, next) => {
     reqArr.push(store.dispatch('getUserInfo'));
   }
 
-  // await Promise.all(reqArr);
+  await Promise.all(reqArr);
 
   next();
 });
