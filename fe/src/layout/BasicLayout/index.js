@@ -5,7 +5,7 @@ import store from '@/store';
 
 export default defineComponent({
   components: {
-    // AppNav: Nav,
+    AppNav: Nav,
   },
   setup() {
     const logout = () => {
