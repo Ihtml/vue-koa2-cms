@@ -5,6 +5,8 @@ const cors = require('@koa/cors') // 解决跨域
 
 const registerRoutes = require('./routers')
 const { middleware: koaJwtMiddleware, checkUser, catchTokenError } = require('./helpers/token');
+const { logMiddleware } = require('./helpers/log');
+const config = require('./project.config');
 
 const app = new Koa()
 
@@ -17,9 +19,11 @@ connect().then(() => {
     koaJwtMiddleware(app);
     app.use(checkUser);
 
+    app.use(logMiddleware);
+
     registerRoutes(app)
 
-    app.listen(3000, () => {
+    app.listen(config.SERVER_PORT, () => {
         console.log('开始监听3000端口...');
     })
 })

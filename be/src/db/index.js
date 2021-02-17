@@ -4,6 +4,8 @@ require('./Schemas/InviteCode');
 require('./Schemas/Good');
 require('./Schemas/InventoryLog');
 require('./Schemas/Character');
+require('./Schemas/Log');
+require('./Schemas/LogResponse');
 const mongoose = require('mongoose')
 
 // 给哪个数据库
