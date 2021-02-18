@@ -69,11 +69,11 @@ router.beforeEach(async (to, from, next) => {
     return;
   }
 
-  const reqArr = [];
-
   if (!store.state.characterInfo.length) {
-    reqArr.push(store.dispatch('getCharacterInfo'));
+    await store.dispatch('getCharacterInfo');
   }
+
+  const reqArr = [];
 
   if (!store.state.userInfo.account) {
     reqArr.push(store.dispatch('getUserInfo'));

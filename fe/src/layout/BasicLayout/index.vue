@@ -7,7 +7,7 @@
       <div class="right">
         <img src="https://cms.drstrong.cn/static/images/user.jpg" alt="">
 
-        <div class="hello-msg">你好，admin</div>
+        <div class="hello-msg">你好，{{ store.userInfo.account }}</div>
         <div class="logout" @click="logout">退出</div>
       </div>
     </div>

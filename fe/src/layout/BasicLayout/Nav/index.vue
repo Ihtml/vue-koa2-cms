@@ -7,6 +7,7 @@
       mode="inline"
       v-for="(item) in menu"
       :key="item.url"
+      v-only-admin="item.onlyAdmin"
     >
       <a-sub-menu
         v-if="item.children"
