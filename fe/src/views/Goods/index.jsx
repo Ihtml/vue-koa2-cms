@@ -1,9 +1,11 @@
 import { defineComponent, ref, onMounted } from 'vue';
-import { book } from '@/api';
+import { good } from '@/api';
 import { useRouter } from 'vue-router';
 import { message, Modal, Input } from 'ant-design-vue';
 import { result, formatTimestamp } from '@/helpers/utils';
+import { getClassifyTitleById } from '@/helpers/good-classify';
 import AddOne from './AddOne/index.vue';
+import _ from '@/config/common';
 import Update from './Update/index.vue';
 
 export default defineComponent({
@@ -11,17 +13,23 @@ export default defineComponent({
     AddOne,
     Update,
   },
-  setup() {
+  props: {
+    simple: Boolean,
+  },
+  setup(props) {
     const router = useRouter();
 
     const columns = [
       {
-        title: '书名',
+        title: `${_.KEYWORD}名`,
         dataIndex: 'name',
       },
       {
-        title: '作者',
-        dataIndex: 'author',
+        title: '保质期',
+        dataIndex: 'expirationDate',
+        slots: {
+          customRender: 'expirationDate',
+        },
       },
       {
         title: '价格',
@@ -34,23 +42,28 @@ export default defineComponent({
         },
       },
       {
-        title: '出版日期',
-        dataIndex: 'publishDate',
+        title: '生产日期',
+        dataIndex: 'producedDate',
         slots: {
-          customRender: 'publishDate',
+          customRender: 'producedDate',
         },
       },
       {
         title: '分类',
-        dataIndex: 'classify',
+        slots: {
+          customRender: 'classify',
+        },
       },
-      {
+    ];
+
+    if (!props.simple) {
+      columns.push({
         title: '操作',
         slots: {
           customRender: 'actions',
         },
-      },
-    ];
+      });
+    }
 
     const show = ref(false);
     const showUpdateModal = ref(false);
@@ -59,11 +72,11 @@ export default defineComponent({
     const curPage = ref(1);
     const keyword = ref('');
     const isSearch = ref(false);
-    const curEditBook = ref({});
+    const curEditGood = ref({});
 
-    // 获取书籍列表
+    // 获取商品列表
     const getList = async () => {
-      const res = await book.list({
+      const res = await good.list({
         page: curPage.value,
         size: 10,
         keyword: keyword.value,
@@ -106,21 +119,15 @@ export default defineComponent({
       getList();
     };
 
-    // 删除一本书籍
+    // 删除一本商品
     const remove = async ({ text: record }) => {
       const { _id } = record;
 
-      const res = await book.remove(_id);
+      const res = await good.remove(_id);
 
       result(res)
         .success(({ msg }) => {
           message.success(msg);
-
-          // const idx = list.value.findIndex((item) => {
-          //   return item._id === _id;
-          // });
-
-          // list.value.splice(idx, 1);
 
           getList();
         });
@@ -137,14 +144,14 @@ export default defineComponent({
         title: `要${word}多少库存`,
         content: (
           <div>
-            <Input class="__book_input_count" />
+            <Input class="__good_input_count" />
           </div>
         ),
         onOk: async () => {
-          const el = document.querySelector('.__book_input_count');
+          const el = document.querySelector('.__good_input_count');
           let num = el.value;
 
-          const res = await book.updateCount({
+          const res = await good.updateCount({
             id: record._id,
             num,
             type,
@@ -174,13 +181,15 @@ export default defineComponent({
       });
     };
 
+    // 显示更新弹框
     const update = ({ record }) => {
       showUpdateModal.value = true;
-      curEditBook.value = record;
+      curEditGood.value = record;
     };
 
-    const updateCurBook = (newData) => {
-      Object.assign(curEditBook.value, newData);
+    // 更新列表的某一行数据
+    const updateCurGood = (newData) => {
+      Object.assign(curEditGood.value, newData);
     };
 
     // 进入商品详情页
@@ -202,11 +211,14 @@ export default defineComponent({
       isSearch,
       remove,
       updateCount,
-      toDetail,
       showUpdateModal,
       update,
-      curEditBook,
-      updateCurBook,
+      curEditGood,
+      updateCurGood,
+      toDetail,
+      getList,
+      getClassifyTitleById,
+      simple: props.simple,
     };
   },
 });

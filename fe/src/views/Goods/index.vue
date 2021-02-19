@@ -1,35 +1,55 @@
 <template>
   <div>
-    <a-card>
-      <h2>商品列表</h2>
+    <a-card
+      :title="simple ? $$.PAGE_META.DASHBOARD.RECENT.LEFT_TITLE : ''"
+    >
+      <div v-if="!simple">
+        <h2>{{ $$.PAGE_META.TOPIC_MGR.PAGE_TITLE }}</h2>
 
-      <a-divider />
+        <a-divider />
 
-      <space-between>
-        <div class="search">
-          <a-input-search
-            placeholder="根据书名搜索"
-            enter-button
-            v-model:value="keyword"
-            @search="onSearch"
-          />
+        <space-between>
+          <div class="search">
+            <a-input-search
+              :placeholder="`根据药品名搜索`"
+              enter-button
+              v-model:value="keyword"
+              @search="onSearch"
+            />
 
-          <a v-if="isSearch" href="javascript:;" @click="backAll">返回</a>
-        </div>
+            <a v-if="isSearch" href="javascript:;" @click="backAll">返回</a>
+          </div>
 
-        <a-button v-only-admin @click="show = true">添加一条</a-button>
-      </space-between>
+          <div>
+            <a-button
+              @click="show = true"
+              v-only-admin
+            >
+              添加一条
+            </a-button>
+          </div>
+        </space-between>
 
-      <a-divider />
+        <a-divider />
+      </div>
 
       <a-table
         :columns="columns"
         :data-source="list"
         :pagination="false"
-        :rowKey="(record) => record._id"
+        bordered
+        :scroll="{ x: 'max-content' }"
       >
-        <template #publishDate="data">
-          {{ formatTimestamp(data.record.publishDate) }}
+        <template #expirationDate="data">
+          {{ formatTimestamp(data.record.expirationDate) }}
+        </template>
+
+        <template #producedDate="data">
+          {{ formatTimestamp(data.record.producedDate) }}
+        </template>
+
+        <template #classify="{ record }">
+          {{ getClassifyTitleById(record.classify) }}
         </template>
 
         <template #count="data">
@@ -38,7 +58,7 @@
           <a href="javascript:;" @click="updateCount('OUT_COUNT', data.record)">出库</a>
         </template>
 
-        <template #actions="record">
+        <template #actions="record" v-if="!simple">
           <a href="javascript:;" @click="toDetail(record)">详情</a>
           &nbsp;
           <a v-only-admin href="javascript:;" @click="update(record)">编辑</a>
@@ -46,25 +66,26 @@
           <a v-only-admin href="javascript:;" @click="remove(record)">删除</a>
         </template>
       </a-table>
-      <space-between style="margin-top: 24px;">
-        <div />
+      <flex-end v-if="!simple" style="margin-top: 24px;">
         <a-pagination
           v-model:current="curPage"
           :total="total"
           :page-size="10"
           @change="setPage"
         />
-      </space-between>
+      </flex-end>
     </a-card>
 
     <add-one
       v-model:show="show"
+      :classifyList="goodClassifyList"
+      @getList="getList"
     />
 
     <update
       v-model:show="showUpdateModal"
-      :book="curEditBook"
-      @update="updateCurBook"
+      :good="curEditGood"
+      @update="updateCurGood"
     />
   </div>
 </template>
@@ -74,4 +95,3 @@
 <style lang="scss" scoped>
   @import './index.scss';
 </style>
-

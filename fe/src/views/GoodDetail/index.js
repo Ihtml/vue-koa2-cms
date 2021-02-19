@@ -1,8 +1,8 @@
 import { defineComponent, isVNode, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { result, formatTimestamp } from '@/helpers/utils';
-import { book, inventoryLog } from '@/api';
-// import { getClassifyTitleById } from '@/helpers/book-classify';
+import { good, inventoryLog } from '@/api';
+import { getClassifyTitleById } from '@/helpers/good-classify';
 import { CheckOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
 import Update from '@/views/Goods/Update/index.vue';
@@ -39,7 +39,7 @@ export default defineComponent({
 
     // 获取商品详细信息
     const getDetail = async () => {
-      const res = await book.detail(id);
+      const res = await good.detail(id);
 
       result(res)
         .success(({ data }) => {
@@ -70,7 +70,7 @@ export default defineComponent({
 
     // 删除操作
     const remove = async () => {
-      const res = await book.remove(id);
+      const res = await good.remove(id);
 
       result(res)
         .success(({ msg }) => {
@@ -81,8 +81,8 @@ export default defineComponent({
     };
 
     // 更新操作
-    const update = (book) => {
-      Object.assign(detailInfo.value, book);
+    const update = (good) => {
+      Object.assign(detailInfo.value, good);
     };
 
     // 日志分页切换的时候
@@ -112,7 +112,7 @@ export default defineComponent({
       logFilter,
       curLogType,
       logCurPage,
-      // getClassifyTitleById,
+      getClassifyTitleById,
     };
   },
 });

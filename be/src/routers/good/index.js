@@ -26,8 +26,8 @@ router.post('/add', async (ctx) => {
   const {
     name,
     price,
-    author,
-    publishDate,
+    producedDate,
+    expirationDate,
     classify,
     count,
   } = getBody(ctx);
@@ -35,8 +35,8 @@ router.post('/add', async (ctx) => {
   const good = new Good({
     name,
     price,
-    author,
-    publishDate,
+    expirationDate,
+    producedDate,
     classify,
     count,
   });

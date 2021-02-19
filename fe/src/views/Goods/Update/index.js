@@ -1,20 +1,21 @@
 import { defineComponent, reactive, watch } from 'vue';
-import { book } from '@/api';
+import { good } from '@/api';
 import { message } from 'ant-design-vue';
 import { result, clone } from '@/helpers/utils';
 import moment from 'moment';
+import store from '@/store';
 
 export default defineComponent({
   props: {
     show: Boolean,
-    book: Object,
+    good: Object,
   },
   setup(props, context) {
     const editForm = reactive({
       name: '',
       price: 0,
-      author: '',
-      publishDate: 0,
+      producedDate: 0,
+      expirationDate: 0,
       classify: '',
     });
 
@@ -22,18 +23,19 @@ export default defineComponent({
       context.emit('update:show', false);
     };
 
-    watch(() => props.book, (current) => {
+    watch(() => props.good, (current) => {
       Object.assign(editForm, current);
-      editForm.publishDate = moment(Number(editForm.publishDate));
+      editForm.producedDate = moment(Number(editForm.producedDate));
+      editForm.expirationDate = moment(Number(editForm.expirationDate));
     });
 
     const submit = async () => {
-      const res = await book.update({
-        id: props.book._id,
+      const res = await good.update({
+        id: props.good._id,
         name: editForm.name,
         price: editForm.price,
-        author: editForm.author,
-        publishDate: editForm.publishDate.valueOf(),
+        expirationDate: editForm.expirationDate.valueOf(),
+        producedDate: editForm.producedDate.valueOf(),
         classify: editForm.classify,
       });
 
@@ -50,6 +52,7 @@ export default defineComponent({
       submit,
       props,
       close,
+      store: store.state,
     };
   },
 });
