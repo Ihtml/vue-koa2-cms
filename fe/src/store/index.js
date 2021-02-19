@@ -1,6 +1,6 @@
 // vuex 提供严格的管理数据流程的方式 ，采用单向的数据流，帮助规范的使用全局的数据
 import { createStore, Store } from 'vuex';
-import { character, user } from '@/api';
+import { character, user, goodClassify } from '@/api';
 import { getCharacterInfoById } from '@/helpers/character';
 import { result } from '@/helpers/utils';
 
@@ -9,6 +9,7 @@ export default createStore({
     characterInfo: [],
     userInfo: {},
     userCharacter: {},
+    goodClassify: [],
   },
   mutations: {
     setCharacterInfo(state, characterInfo) {
@@ -19,6 +20,9 @@ export default createStore({
     },
     setUserCharacter(state, userCharacter) {
       state.userCharacter = userCharacter;
+    },
+    setGoodClassify(state, goodClassify) {
+      state.goodClassify = goodClassify;
     },
   },
   actions: {
@@ -39,6 +43,14 @@ export default createStore({
           store.commit('setUserCharacter', getCharacterInfoById(data.character));
 
           console.log(store.state);
+        });
+    },
+    async getGoodClassify(store) {
+      const res = await goodClassify.list();
+
+      result(res)
+        .success(({data}) => {
+          store.commit('setGoodClassify', data);
         });
     },
   },

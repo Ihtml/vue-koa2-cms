@@ -23,22 +23,15 @@
           </div>
 
           <div class="item">
-            <a-input
-              size="large"
-              placeholder="密码"
-              v-model:value="loginForm.password"
-            >
+            <a-input-password size="large" v-model:value="loginForm.password" placeholder="密码">
               <template
                 v-slot:prefix
               >
                 <LockOutlined />
               </template>
-            </a-input>
+            </a-input-password>
           </div>
 
-          <div class="item">
-            <a href="javascript:;" @click="forgetPassword">忘记密码</a>
-          </div>
 
           <div class="item">
             <a-button
@@ -66,17 +59,13 @@
           </div>
 
           <div class="item">
-            <a-input
-              size="large"
-              placeholder="密码"
-              v-model:value="regForm.password"
-            >
+            <a-input-password size="large" v-model:value="regForm.password" placeholder="密码">
               <template
                 v-slot:prefix
               >
                 <LockOutlined />
               </template>
-            </a-input>
+            </a-input-password>
           </div>
 
           <div class="item">

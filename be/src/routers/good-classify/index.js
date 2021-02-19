@@ -1,6 +1,6 @@
 const Router = require('@koa/router');
 const mongoose = require('mongoose');
-const _ = require('../../config/common');
+const _ = require('../../config');
 
 const GoodClassify = mongoose.model('GoodClassify');
 

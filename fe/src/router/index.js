@@ -35,6 +35,11 @@ const routes = [
         name: 'Log',
         component: () => import(/* webpackChunkName: "Log" */ '../views/Log/index.vue'),
       },
+      {
+        path: 'good-classify',
+        name: 'GoodClassify',
+        component: () => import(/* webpackChunkName: "GoodClassify" */ '../views/GoodClassify/index.vue'),
+      },
     ]
   }
 ];
@@ -77,6 +82,10 @@ router.beforeEach(async (to, from, next) => {
 
   if (!store.state.userInfo.account) {
     reqArr.push(store.dispatch('getUserInfo'));
+  }
+
+  if (!store.state.goodClassify.length) {
+    reqArr.push(store.dispatch('getGoodClassify'));
   }
 
   await Promise.all(reqArr);
