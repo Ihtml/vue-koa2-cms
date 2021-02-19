@@ -40,6 +40,11 @@ const routes = [
         name: 'GoodClassify',
         component: () => import(/* webpackChunkName: "GoodClassify" */ '../views/GoodClassify/index.vue'),
       },
+      {
+        path: 'invite-code',
+        name: 'InviteCode',
+        component: () => import(/* webpackChunkName: "InviteCode" */ '../views/InviteCode/index.vue'),
+      },
     ]
   }
 ];
@@ -84,9 +89,9 @@ router.beforeEach(async (to, from, next) => {
     reqArr.push(store.dispatch('getUserInfo'));
   }
 
-  if (!store.state.goodClassify.length) {
-    reqArr.push(store.dispatch('getGoodClassify'));
-  }
+  // if (!store.state.goodClassify.length) {
+  //   reqArr.push(store.dispatch('getGoodClassify'));
+  // }
 
   await Promise.all(reqArr);
 

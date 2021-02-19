@@ -7,8 +7,8 @@ import { result, clone } from '@/helpers/utils';
 const defaultFormData = {
   name: '',
   price: 0,
-  producedDate: 0,
-  expirationDate: 0,
+  producedDate: '',
+  expirationDate: '',
   classify: '',
   count: '',
 };

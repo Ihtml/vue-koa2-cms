@@ -10,7 +10,7 @@
         <a-form-item :label="`药品名`">
           <a-input v-model:value="editForm.name" />
         </a-form-item>
-        <a-form-item label="价格">
+        <a-form-item label="价格(元)">
           <a-input-number v-model:value="editForm.price" :min="0" :max="99999999999" />
         </a-form-item>
         <a-form-item label="保质期至">

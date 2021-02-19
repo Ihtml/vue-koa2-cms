@@ -7,6 +7,7 @@ import { getClassifyTitleById } from '@/helpers/good-classify';
 import AddOne from './AddOne/index.vue';
 import _ from '@/config/common';
 import Update from './Update/index.vue';
+import store from '@/store';
 
 export default defineComponent({
   components: {
@@ -25,14 +26,14 @@ export default defineComponent({
         dataIndex: 'name',
       },
       {
-        title: '保质期',
+        title: '保质期至',
         dataIndex: 'expirationDate',
         slots: {
           customRender: 'expirationDate',
         },
       },
       {
-        title: '价格',
+        title: '价格(元)',
         dataIndex: 'price',
       },
       {
@@ -76,6 +77,7 @@ export default defineComponent({
 
     // 获取商品列表
     const getList = async () => {
+      await store.dispatch('getGoodClassify')
       const res = await good.list({
         page: curPage.value,
         size: 10,

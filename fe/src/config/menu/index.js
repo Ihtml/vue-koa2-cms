@@ -31,11 +31,6 @@ export default [
         onlyAdmin: true,
       },
       {
-        title: '重制密码列表',
-        url: '/reset/password',
-        onlyAdmin: true,
-      },
-      {
         title: '邀请码管理',
         url: '/invite-code',
         onlyAdmin: true,

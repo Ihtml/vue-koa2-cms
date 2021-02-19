@@ -17,6 +17,7 @@
           :data-source="list"
           :pagination="false"
           :scroll="{ x: 'max-content' }"
+          :rowKey="(record) => record._id"
         >
           <template #createdAt="{ record }">
             {{ formatTimestamp(record.meta.createdAt) }}

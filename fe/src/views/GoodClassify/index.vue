@@ -19,6 +19,7 @@
           :data-source="list"
           :columns="columns"
           :pagination="false"
+          :rowKey="(record) => record._id"
         >
           <template #actions="{ record }">
             <a-button

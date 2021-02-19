@@ -39,6 +39,7 @@
         :pagination="false"
         bordered
         :scroll="{ x: 'max-content' }"
+        :rowKey="(record) => record._id"
       >
         <template #expirationDate="data">
           {{ formatTimestamp(data.record.expirationDate) }}
@@ -78,7 +79,6 @@
 
     <add-one
       v-model:show="show"
-      :classifyList="goodClassifyList"
       @getList="getList"
     />
 

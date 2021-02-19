@@ -2,8 +2,6 @@ const Router = require('@koa/router');
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 
-// const { getBody } = require('../../helpers/utils');
-
 const InviteCode = mongoose.model('InviteCode');
 
 const router = new Router({
@@ -12,7 +10,7 @@ const router = new Router({
 
 router.post('/add', async (ctx) => {
   const {
-    count = 2,
+    count = 1,
   } = ctx.request.body;
 
   const arr = [];

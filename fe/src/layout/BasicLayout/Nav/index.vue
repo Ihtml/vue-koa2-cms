@@ -14,7 +14,7 @@
         :key="item.title"
       >
         <template #title>
-          <span><MailOutlined /><span>{{ item.title }}</span></span>
+          <span><span>{{ item.title }}</span></span>
         </template>
         <a-menu-item
           @click="to(child.url)"

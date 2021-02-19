@@ -3,7 +3,7 @@ import { reactive } from 'vue';
 export default reactive({
   BASE_INFO: {
     LEFT: {
-      TITLE: '商品数量',
+      TITLE: '药品数量',
       CONTENT(count) {
         return `共 ${count} 样`;
       },

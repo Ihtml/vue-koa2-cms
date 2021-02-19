@@ -5,3 +5,4 @@ export * as user from './user';
 export * as character from './character';
 export * as log from './log';
 export * as goodClassify from './good-classify';
+export * as inviteCode from './invite-code';

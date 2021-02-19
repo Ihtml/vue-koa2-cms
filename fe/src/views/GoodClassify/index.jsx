@@ -2,6 +2,7 @@ import { defineComponent, ref, onMounted } from 'vue';
 import { goodClassify } from '@/api';
 import { result } from '@/helpers/utils';
 import { message, Modal, Input } from 'ant-design-vue';
+import store from '@/store';
 
 const columns = [
   {
@@ -37,6 +38,7 @@ export default defineComponent({
         .success(() => {
           getList();
           title.value = '';
+          store.dispatch('getGoodClassify')
         });
     };
 
@@ -52,6 +54,7 @@ export default defineComponent({
           message.success(msg);
 
           getList();
+          store.dispatch('getGoodClassify')
         });
     };
 
@@ -77,6 +80,8 @@ export default defineComponent({
                   item.title = title;
                 }
               });
+              store.dispatch('getGoodClassify')
+
             });
         },
       });
