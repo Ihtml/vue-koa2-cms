@@ -45,6 +45,11 @@ const routes = [
         name: 'InviteCode',
         component: () => import(/* webpackChunkName: "InviteCode" */ '../views/InviteCode/index.vue'),
       },
+      {
+        path: 'user-config',
+        name: 'UserConfig',
+        component: () => import(/* webpackChunkName: "UserConfig" */ '../views/UserConfig/index.vue'),
+      },
     ]
   }
 ];

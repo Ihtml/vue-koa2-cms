@@ -6,6 +6,7 @@ const user = require('./user');
 const character = require('./character');
 const log = require('./log');
 const goodClassify = require('./good-classify');
+const userConfig = require('./user-config');
 
 module.exports = (app) => {
     app.use(auth.routes())
@@ -16,4 +17,5 @@ module.exports = (app) => {
     app.use(character.routes());
     app.use(log.routes());
     app.use(goodClassify.routes());
+    app.use(userConfig.routes());
 }

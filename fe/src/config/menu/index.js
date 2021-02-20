@@ -22,24 +22,18 @@ export default [
     onlyAdmin: true,
   },
   {
-    title: '杂项',
-    onlyAdmin: false,
-    children: [
-      {
-        title: `${_.KEYWORD}分类管理`,
-        url: '/good-classify',
-        onlyAdmin: true,
-      },
-      {
-        title: '邀请码管理',
-        url: '/invite-code',
-        onlyAdmin: true,
-      },
-    ],
+    title: `药品分类管理`,
+    url: '/good-classify',
+    onlyAdmin: true,
+  },
+  {
+    title: '邀请码管理',
+    url: '/invite-code',
+    onlyAdmin: true,
   },
   {
     title: '个人设置',
-    url: '/profile',
+    url: '/user-config',
     onlyAdmin: false,
   },
 ];

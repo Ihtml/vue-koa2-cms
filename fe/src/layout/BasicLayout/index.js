@@ -11,7 +11,7 @@ export default defineComponent({
     const logout = () => {
       setToken('');
 
-      window.location.href = '/';
+      window.location.href = '/auth';
     };
 
     return {
