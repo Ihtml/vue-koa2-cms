@@ -2,7 +2,7 @@
   <div class="basic-layout">
     <div class="app-header">
       <div class="left">
-        <div class="title">库存管理系统</div>
+        <div class="title">药品库存管理系统</div>
       </div>
       <div class="right">
         <img src="https://cms.drstrong.cn/static/images/user.jpg" alt="">

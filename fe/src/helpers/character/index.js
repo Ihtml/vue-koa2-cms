@@ -14,6 +14,6 @@ export const getCharacterInfoById = (id) => {
   });
 
   return one || {
-    title: '未知角色',
+    title: '未设置角色',
   };
 };

@@ -58,6 +58,7 @@
             :columns="columns"
             bordered
             :pagination="false"
+            :rowKey="(record) => record._id"
           >
             <template #createdAt="{ record }">
               {{ formatTimestamp(record.meta.createdAt) }}

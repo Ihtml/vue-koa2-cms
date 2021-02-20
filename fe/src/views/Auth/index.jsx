@@ -30,7 +30,6 @@ export default defineComponent({
     })
 
     const login = async () => {
-      console.log('login');
       if (loginForm.account === '') {
         message.info('请输入账户');
         return;
@@ -74,8 +73,6 @@ export default defineComponent({
         message.info('请输入邀请码');
         return;
       }
-      // auth.register(regForm.account, regForm.password, regForm.inviteCode)
-      // .then(res => message.success(res.data.msg))
 
       const res = await auth.register(
         regForm.account,

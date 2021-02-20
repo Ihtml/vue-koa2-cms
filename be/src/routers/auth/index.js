@@ -79,8 +79,7 @@ router.post('/register', async (ctx) => {
     // 响应成功
     ctx.body = {
         code: 1,
-        msg: '注册成功',
-        data: res,
+        msg: `${account}注册成功`,
     };
 })
 

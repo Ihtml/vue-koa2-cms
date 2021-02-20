@@ -2,14 +2,14 @@ import _ from '../common';
 
 export default [
   {
-    title: '总览',
-    url: '/dashboard',
-    onlyAdmin: true,
-  },
-  {
     title: `${_.KEYWORD}管理`,
     url: '/goods',
     onlyAdmin: false,
+  },
+  {
+    title: `药品分类管理`,
+    url: '/good-classify',
+    onlyAdmin: true,
   },
   {
     title: '用户管理',
@@ -21,11 +21,7 @@ export default [
     url: '/log',
     onlyAdmin: true,
   },
-  {
-    title: `药品分类管理`,
-    url: '/good-classify',
-    onlyAdmin: true,
-  },
+
   {
     title: '邀请码管理',
     url: '/invite-code',
